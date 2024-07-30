@@ -5,7 +5,35 @@ const operations=[
     {calculate:(a,b)=>{return Math.round((a + b) * 100)/100}, sign:'+'},
     {calculate:(a,b)=>{return Math.round((a - b) * 100)/100}, sign:'-'},
     {calculate:(a,b)=>{return Math.round((a * b) * 100)/100}, sign:'×'},
-    {calculate:(a,b)=>{return Math.round((a / b) * 100)/100;}, sign:'÷'}];
+    {calculate:(a,b)=>{return Math.round((a / b) * 100)/100;}, sign:'÷'}
+];
+const symbols =[
+    {start:(display,buttonString)=>{
+        startOperation(display,buttonString)}, sign:'+'},
+    {start:(display,buttonString)=>{
+        startOperation(display,buttonString)}, sign:'-'},
+    {start:(display,buttonString)=>{
+        startOperation(display,buttonString)}, sign:'×'},
+    {start:(display,buttonString)=>{
+        startOperation(display,buttonString)}, sign:'÷'},
+    {start:(display)=>{
+        display.textContent='0'; 
+        resetCalculator();}, sign:'AC'},
+    {start:(display,buttonString)=>{
+        setArgument(buttonString);
+        display.textContent+=`${buttonString}`;}, sign:'.'},
+    {start:()=>{
+        if(!(display.textContent==='0')){
+        display.textContent=`${reverseNumberSign(display.textContent)}`
+        numberOne=display.textContent;}}, sign:'-/+'},
+    {start:()=>{
+        calculate(display);
+        numberSign='';}, sign:'='},
+];
+const startOperation=(display,buttonString)=>{
+    calculate(display);
+    numberSign=buttonString;
+}
 const reverseNumberSign=(text)=>{
     const array=[...text];
     if(text[0]==="-"){
@@ -70,45 +98,13 @@ const calculate=(display)=>{
         result=0;
     }
 }
+
 const operate=(display,buttonString)=>{
-    switch(buttonString){
-        case "+":
-            calculate(display);
-            numberSign=buttonString;
-            break; 
-        case "-":
-            calculate(display);
-            numberSign=buttonString;
-            break;  
-        case "AC":
-            display.textContent='0';
-            resetCalculator();
+    for(let i=0;i<symbols.length;i++){
+        if(symbols[i].sign===buttonString){
+            symbols[i].start(display,buttonString);
             break;
-        case "÷":
-            calculate(display);
-            numberSign=buttonString;
-            break;
-        case "×":
-            calculate(display);
-            numberSign=buttonString;
-            break;
-        case ".":
-            let text=buttonString;
-            setArgument(text);
-            display.textContent+=`${text}`;
-            break;
-        case "=":
-            calculate(display);
-            numberSign='';
-            break;
-        case "-/+":
-            if(!(display.textContent==='0')){
-                display.textContent=`${reverseNumberSign(display.textContent)}`
-                numberOne=display.textContent;
-            }
-            break;
-        default:
-            break;
+        } 
     }
 }
 const display= document.querySelector(".container-top-display");
