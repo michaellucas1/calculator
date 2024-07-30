@@ -2,10 +2,10 @@ let numberOne='';
 let numberTwo='';
 let numberSign='';
 const operations=[
-    {calculate:(a,b)=>{return Math.round((a + b) * 100)/100}, sign:'+'},
-    {calculate:(a,b)=>{return Math.round((a - b) * 100)/100}, sign:'-'},
-    {calculate:(a,b)=>{return Math.round((a * b) * 100)/100}, sign:'×'},
-    {calculate:(a,b)=>{return Math.round((a / b) * 100)/100;}, sign:'÷'}
+    {calculate:(a,b)=>{return a + b}, sign:'+'},
+    {calculate:(a,b)=>{return a - b}, sign:'-'},
+    {calculate:(a,b)=>{return a * b}, sign:'×'},
+    {calculate:(a,b)=>{return a / b}, sign:'÷'}
 ];
 const symbols =[
     {start:(display,buttonString)=>{
@@ -84,13 +84,18 @@ const resetCalculator=()=>{
     numberSign='';
 }
 const calculate=(display)=>{
-    let result='';
+    let result=0;
     if(!(numberOne==='') && !(numberTwo==='')){
         for(let i =0;i<operations.length;i++){
             if(operations[i].sign===numberSign){
                 result+=operations[i].calculate(Number(numberOne),Number(numberTwo));
+                Math.round((result) * 100)/100;
                 break;
             }
+        }
+        console.log(String(result).length>=7);
+        if(String(result).length>=10){
+            result=result.toExponential(5)
         }
         display.textContent=""+result;
         numberOne=result;
