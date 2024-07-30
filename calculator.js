@@ -5,7 +5,7 @@ const operations=[
     {calculate:(a,b)=>{return a + b}, sign:'+'},
     {calculate:(a,b)=>{return a - b}, sign:'-'},
     {calculate:(a,b)=>{return a * b}, sign:'×'},
-    {calculate:(a,b)=>{return a / b;}, sign:'÷'}];
+    {calculate:(a,b)=>{return Math.round((a / b) * 100)/100;}, sign:'÷'}];
 function reverseNumberSign(text){
     const array=[...text];
     if(text[0]==="-"){
@@ -45,7 +45,6 @@ function setArgument(text){
         const array=[...text]
         if(checkDot(array)){
             numberOne+=text;
-            console.log('hello');
         }
         else{
             numberOne=appendNumber(numberOne,text);
