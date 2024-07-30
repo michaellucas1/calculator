@@ -2,11 +2,11 @@ let numberOne='';
 let numberTwo='';
 let numberSign='';
 const operations=[
-    {calculate:(a,b)=>{return a + b}, sign:'+'},
-    {calculate:(a,b)=>{return a - b}, sign:'-'},
-    {calculate:(a,b)=>{return a * b}, sign:'×'},
+    {calculate:(a,b)=>{return Math.round((a + b) * 100)/100}, sign:'+'},
+    {calculate:(a,b)=>{return Math.round((a - b) * 100)/100}, sign:'-'},
+    {calculate:(a,b)=>{return Math.round((a * b) * 100)/100}, sign:'×'},
     {calculate:(a,b)=>{return Math.round((a / b) * 100)/100;}, sign:'÷'}];
-function reverseNumberSign(text){
+const reverseNumberSign=(text)=>{
     const array=[...text];
     if(text[0]==="-"){
         array.splice(0,1);
@@ -16,25 +16,21 @@ function reverseNumberSign(text){
     }
     return array.join('');
 }
-function setDot(text){
+const setDot=(text)=>{
     const array=[...text];
     if(checkDot(array)){
         array.push(".");
     }
     return array.join('');
 }
-function checkDot(text){
-    let result=false;
-    if(!(text.includes('.'))){
-        result=true;
-    }
-    return result;
+const checkDot=(text)=>{
+
+    return text.includes('.');
 }
-function appendNumber(numberOne, text){
+const appendNumber=(numberOne, text)=>{
     return numberOne+text;
 }
-function setArgument(text){
-    
+const setArgument=(text)=>{
     if(numberOne===''){
         numberOne=text;
         if(!(numberSign==='')){
@@ -48,20 +44,18 @@ function setArgument(text){
         }
         else{
             numberOne=appendNumber(numberOne,text);
-        }
-        
+        } 
     }
     else if(!(numberOne==='') && !(numberSign==='')){
         numberTwo=appendNumber(numberTwo,text);
     }
-    
 }
-function resetCalculator(){
+const resetCalculator=()=>{
     numberOne='';
     numberTwo='';
     numberSign='';
 }
-function calculate(display){
+const calculate=(display)=>{
     let result='';
     if(!(numberOne==='') && !(numberTwo==='')){
         for(let i =0;i<operations.length;i++){
@@ -76,11 +70,9 @@ function calculate(display){
         result=0;
     }
 }
-function operate(display,buttonString){
-    let result='';
+const operate=(display,buttonString)=>{
     switch(buttonString){
         case "+":
-            
             calculate(display);
             numberSign=buttonString;
             break; 
@@ -91,9 +83,6 @@ function operate(display,buttonString){
         case "AC":
             display.textContent='0';
             resetCalculator();
-            console.log(numberOne);
-            console.log(numberSign);
-            console.log(numberTwo);
             break;
         case "÷":
             calculate(display);
