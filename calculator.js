@@ -5,7 +5,11 @@ const operations=[
     {calculate:(a,b)=>{return a + b}, sign:'+'},
     {calculate:(a,b)=>{return a - b}, sign:'-'},
     {calculate:(a,b)=>{return a * b}, sign:'×'},
-    {calculate:(a,b)=>{return a / b}, sign:'÷'}
+    {calculate:(a,b)=>{
+        if(b===0){
+            return 'LOL';
+        }
+        return a / b}, sign:'÷'}
 ];
 const symbols =[
     {start:(display,buttonString)=>{
@@ -84,7 +88,7 @@ const resetCalculator=()=>{
     numberSign='';
 }
 const calculate=(display)=>{
-    let result=0;
+    let result='';
     if(!(numberOne==='') && !(numberTwo==='')){
         for(let i =0;i<operations.length;i++){
             if(operations[i].sign===numberSign){
@@ -93,12 +97,17 @@ const calculate=(display)=>{
                 break;
             }
         }
-        console.log(String(result).length>=7);
         if(String(result).length>=10){
             result=result.toExponential(5)
         }
         display.textContent=""+result;
-        numberOne=result;
+        if(result==='LOL'){
+            numberOne='';
+        }
+        else{
+            numberOne=result;
+        }
+        
         numberTwo='';
         result=0;
     }
