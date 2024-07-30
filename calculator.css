@@ -6,7 +6,7 @@ body{
 p{
     margin:0;
 }
-.container-top{
+.container-top-display{
     display:flex;
     justify-content: end;
     color:white;
@@ -29,7 +29,7 @@ p{
 }
 .calculator-container{
     background-color: rgb(144, 19, 19);
-    height:500px;  
+    height:450px;  
     padding-bottom:20px;
 }
 .container-bottom{
