@@ -98,7 +98,7 @@ const calculate=(display)=>{
             }
         }
         if(String(result).length>=10){
-            result=result.toExponential(5);
+            result=Number(result).toExponential(5);
         }
         display.textContent=""+result;
         if(result==='LOL'){
